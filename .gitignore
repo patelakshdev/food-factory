@@ -1,0 +1,22 @@
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+
+# Runtime artifacts
+storage/logs/*
+!storage/logs/index.php
+storage/uploads/*
+!storage/uploads/index.php
+
+# PHP
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Codebase memory graph
+.codebase-memory/

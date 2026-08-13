@@ -1,0 +1,8 @@
+# Route everything through /public, and block direct access to internal folders.
+RewriteEngine On
+
+# Deny access to non-public application folders if the vhost root ever points here.
+<IfModule mod_rewrite.c>
+    RewriteCond %{REQUEST_URI} ^/(config|includes|database|storage)/ [NC]
+    RewriteRule ^ - [F,L]
+</IfModule>
