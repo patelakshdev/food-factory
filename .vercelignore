@@ -1,0 +1,34 @@
+# Do not ship secrets or local environment files
+.env
+.env.*
+!.env.example
+
+# Local/container deployment files (Vercel runs PHP via api/index.php instead)
+Dockerfile
+.dockerignore
+docker-compose.yml
+render.yaml
+deploy/
+
+# Stale static preview (superseded by the live vercel-php app)
+preview/
+
+# Vercel / git metadata
+.vercel
+.git
+.gitignore
+.vercelignore
+
+# Runtime artifacts & logs
+storage/logs/*
+!storage/logs/index.php
+storage/uploads/*
+!storage/uploads/index.php
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.codebase-memory/

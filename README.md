@@ -123,3 +123,37 @@ end-to-end**. Before going live:
 Pick up at admin Menu/Category CRUD (`admin/menu/`, `admin/categories/`),
 then Coupon management, then Settings — in that order they unblock the
 most remaining checklist items with the least new schema work.
+
+## 8. Deploying to Vercel (PHP + managed MySQL web service)
+
+Vercel does not run PHP natively, so this repo uses the community
+`vercel-php@0.9.0` runtime (PHP 8.5) via a single socket function:
+
+- `vercel.json` — one serverless function (`api/index.php`) with a catch-all
+  route; static assets under `/assets/*` are served by Vercel's CDN and every
+  other path is dispatched by the front controller to the real `.php`
+  entrypoint under `public/`, `admin/`, or `api/`.
+- `api/index.php` — strict path whitelist; `config/`, `includes/`,
+  `database/`, `storage/`, `.env` are never reachable over HTTP.
+- `config/app.php` — sessions are stored in a new `sessions` table
+  (DB-backed session handler in `includes/session-handler.php`) so logins
+  survive serverless cold starts.
+- `config/database.php` — idempotent first-boot provisioning: on the first
+  request after you point the app at an empty database it applies
+  `database/schema.sql` + `database/seed.sql` and creates the admin account
+  from `ADMIN_EMAIL` / `ADMIN_PASSWORD`. Disable with `APP_DB_PROVISION=false`.
+
+To deploy:
+
+1. Provision a **managed MySQL/MariaDB web service** reachable over the
+   internet (Aiven Hobby, PlanetScale, Railway, Clever Cloud, etc.), and
+   create a database + DB user (grant the user `CREATE`, `ALTER`, `INDEX`
+   for one-time auto-provisioning, or import `schema.sql` + `seed.sql`
+   yourself and set `APP_DB_PROVISION=false`).
+2. Push this repo to GitHub and import it into Vercel (or `vercel deploy`
+   from the CLI).
+3. In the Vercel project settings set **Environment Variables**:
+   `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`,
+   `ADMIN_EMAIL`, `ADMIN_PASSWORD`.
+4. Visit the site — the first request initialises the schema/seed/admin,
+   then everything (menu, cart, checkout, admin) is fully live.

@@ -1,20 +1,18 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "outputDirectory": "preview",
-  "cleanUrls": false,
-  "rewrites": [
-    { "source": "/", "destination": "/public/index.html" },
-    { "source": "/public/index.php", "destination": "/public/index.html" },
-    { "source": "/public/about.php", "destination": "/public/about.html" },
-    { "source": "/public/menu.php", "destination": "/public/menu.html" },
-    { "source": "/public/gallery.php", "destination": "/public/gallery.html" },
-    { "source": "/public/review.php", "destination": "/public/review.html" },
-    { "source": "/public/reservation.php", "destination": "/public/reservation.html" },
-    { "source": "/public/contact.php", "destination": "/public/contact.html" },
-    { "source": "/public/login.php", "destination": "/public/login.html" },
-    { "source": "/public/register.php", "destination": "/public/register.html" },
-    { "source": "/public/cart.php", "destination": "/public/cart.html" },
-    { "source": "/public/:path*(.*)", "destination": "/404.html" }
+  "functions": {
+    "api/index.php": {
+      "runtime": "vercel-php@0.9.0",
+      "maxDuration": 30
+    }
+  },
+  "routes": [
+    { "src": "/assets/(.*)", "dest": "/assets/$1" },
+    { "src": "/robots.txt", "dest": "/robots.txt" },
+    { "src": "/favicon.ico", "dest": "/favicon.ico" },
+    { "src": "/preview/(.*)", "status": 404 },
+    { "src": "/\.env", "status": 404 },
+    { "src": "/.*", "dest": "/api/index.php" }
   ]
 }

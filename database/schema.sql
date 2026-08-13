@@ -365,4 +365,22 @@ CREATE TABLE IF NOT EXISTS inventory_movements (
     FOREIGN KEY (inventory_item_id) REFERENCES inventory_items(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
+-- ------------------------------------------------------------
+-- SESSIONS (database-backed session store)
+-- Required on serverless hosts (Vercel etc.) where the local
+-- filesystem is ephemeral; the app installs DatabaseSessionHandler
+-- in config/app.php so PHP sessions persist across cold starts.
+-- ------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS sessions (
+    session_id VARCHAR(128) PRIMARY KEY,
+    user_id INT UNSIGNED NULL,
+    payload MEDIUMBLOB NOT NULL,
+    last_activity INT UNSIGNED NOT NULL,
+    ip_address VARCHAR(45) NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_sessions_user (user_id),
+    INDEX idx_sessions_activity (last_activity)
+) ENGINE=InnoDB;
+
 SET FOREIGN_KEY_CHECKS = 1;
