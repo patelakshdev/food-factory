@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation - Food Factory</title>
+<link rel="stylesheet" href="/assets/css/style4.css">
+<link rel="stylesheet" href="/assets/css/site.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+    <nav>
+        <div class="logo">
+            <img src="/assets/images/img.jpg" alt="Restaurant Logo">
+            <h2>FOOD FACTORY</h2>
+        </div>
+        <div class="menu-toggle" id="menu-toggle">☰</div>
+        <ul id="nav-menu">
+            <li><a href="/public/index.php">Home</a></li>
+            <li><a href="/public/about.php">About</a></li>
+            <li><a href="/public/menu.php">Menu</a></li>
+            <li><a href="/public/review.php">Reviews</a></li>
+            <li><a href="/public/gallery.php">Gallery</a></li>
+            <li><a href="/public/reservation.php">Reservation</a></li>
+            <li><a href="/public/contact.php">Contact</a></li>
+            <li><a href="/public/order.php">Order</a></li>
+            <li><a href="/public/cart.php" class="cart-link">🛒 Cart</a></li>
+                            <li><a href="/public/login.php">Login</a></li>
+                    </ul>
+    </nav>
+</header>
+
+<section class="reservation section-wrap" id="Reservation">
+    <h2>Book Your Table</h2>
+    <p class="reservation-text">Reserve your table today and enjoy a delicious dining experience at Food Factory.</p>
+
+    
+    <form action="/public/reservation.php" method="POST">
+        <input type="hidden" name="csrf_token" value="37e283167d9c7ac75d2d47577c781644c7e881883319a7b63aa4a2282a92a02e">        <input type="text" name="name" placeholder="Full Name" value="" required>
+        <input type="email" name="email" placeholder="Email Address" value="" required>
+        <input type="tel" name="phone" placeholder="Phone Number" value="" required>
+        <input type="date" name="date" min="2026-08-13" required>
+        <input type="time" name="time" required>
+        <input type="number" name="guests" placeholder="Number of Guests" min="1" max="20" required>
+        <button type="submit" class="btn">Book Table</button>
+    </form>
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">
+            <h2>Food Factory</h2>
+            <p>Fresh Food • Great Taste • Happy Customers</p>
+        </div>
+        <div class="footer-links">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="/public/index.php">Home</a></li>
+                <li><a href="/public/about.php">About</a></li>
+                <li><a href="/public/menu.php">Menu</a></li>
+                <li><a href="/public/review.php">Reviews</a></li>
+                <li><a href="/public/gallery.php">Gallery</a></li>
+                <li><a href="/public/reservation.php">Reservation</a></li>
+                <li><a href="/public/contact.php">Contact</a></li>
+                <li><a href="/public/order.php">Order</a></li>
+            </ul>
+        </div>
+        <div class="footer-contact">
+            <h3>Contact</h3>
+            <p>📞 +91 81412 14421</p>
+            <p>📧 foodfactory@gmail.com</p>
+            <p>📍 Ahmedabad, Gujarat</p>
+        </div>
+    </div>
+    <hr>
+    <p class="copyright">© 2026 Food Factory. All Rights Reserved.</p>
+</footer>
+<script src="/assets/js/script.js"></script>
+<script src="/assets/js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Account - Food Factory</title>
+<link rel="stylesheet" href="/assets/css/style4.css">
+<link rel="stylesheet" href="/assets/css/site.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+    <nav>
+        <div class="logo">
+            <img src="/assets/images/img.jpg" alt="Restaurant Logo">
+            <h2>FOOD FACTORY</h2>
+        </div>
+        <div class="menu-toggle" id="menu-toggle">☰</div>
+        <ul id="nav-menu">
+            <li><a href="/public/index.php">Home</a></li>
+            <li><a href="/public/about.php">About</a></li>
+            <li><a href="/public/menu.php">Menu</a></li>
+            <li><a href="/public/review.php">Reviews</a></li>
+            <li><a href="/public/gallery.php">Gallery</a></li>
+            <li><a href="/public/reservation.php">Reservation</a></li>
+            <li><a href="/public/contact.php">Contact</a></li>
+            <li><a href="/public/order.php">Order</a></li>
+            <li><a href="/public/cart.php" class="cart-link">🛒 Cart</a></li>
+                            <li><a href="/public/login.php">Login</a></li>
+                    </ul>
+    </nav>
+</header>
+<section class="section-wrap">
+    <div class="login-box">
+        <h2>Create Account</h2>
+                <form method="post">
+            <input type="hidden" name="csrf_token" value="7fc586123bdb010394cf9ba8e0f83a2567af04a2fde2626f0e6965ca4f3b13ec">            <input type="text" name="first_name" placeholder="First Name" value="" required>
+            <input type="text" name="last_name" placeholder="Last Name" value="">
+            <input type="email" name="email" placeholder="Email" value="" required>
+            <input type="tel" name="phone" placeholder="Phone" value="" required>
+            <input type="password" name="password" placeholder="Password (min 8 characters)" required>
+            <input type="password" name="password_confirm" placeholder="Confirm Password" required>
+            <button type="submit" class="btn" style="width:100%;">Create Account</button>
+        </form>
+        <p style="margin-top:14px;font-size:14px;">Already have an account? <a href="/public/login.php">Log in</a></p>
+    </div>
+</section>
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">
+            <h2>Food Factory</h2>
+            <p>Fresh Food • Great Taste • Happy Customers</p>
+        </div>
+        <div class="footer-links">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="/public/index.php">Home</a></li>
+                <li><a href="/public/about.php">About</a></li>
+                <li><a href="/public/menu.php">Menu</a></li>
+                <li><a href="/public/review.php">Reviews</a></li>
+                <li><a href="/public/gallery.php">Gallery</a></li>
+                <li><a href="/public/reservation.php">Reservation</a></li>
+                <li><a href="/public/contact.php">Contact</a></li>
+                <li><a href="/public/order.php">Order</a></li>
+            </ul>
+        </div>
+        <div class="footer-contact">
+            <h3>Contact</h3>
+            <p>📞 +91 81412 14421</p>
+            <p>📧 foodfactory@gmail.com</p>
+            <p>📍 Ahmedabad, Gujarat</p>
+        </div>
+    </div>
+    <hr>
+    <p class="copyright">© 2026 Food Factory. All Rights Reserved.</p>
+</footer>
+<script src="/assets/js/script.js"></script>
+<script src="/assets/js/site.js"></script>
+</body>
+</html>

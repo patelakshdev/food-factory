@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu - Food Factory</title>
+<link rel="stylesheet" href="/assets/css/style4.css">
+<link rel="stylesheet" href="/assets/css/site.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+    <nav>
+        <div class="logo">
+            <img src="/assets/images/img.jpg" alt="Restaurant Logo">
+            <h2>FOOD FACTORY</h2>
+        </div>
+        <div class="menu-toggle" id="menu-toggle">☰</div>
+        <ul id="nav-menu">
+            <li><a href="/public/index.php">Home</a></li>
+            <li><a href="/public/about.php">About</a></li>
+            <li><a href="/public/menu.php">Menu</a></li>
+            <li><a href="/public/review.php">Reviews</a></li>
+            <li><a href="/public/gallery.php">Gallery</a></li>
+            <li><a href="/public/reservation.php">Reservation</a></li>
+            <li><a href="/public/contact.php">Contact</a></li>
+            <li><a href="/public/order.php">Order</a></li>
+            <li><a href="/public/cart.php" class="cart-link">🛒 Cart</a></li>
+                            <li><a href="/public/login.php">Login</a></li>
+                    </ul>
+    </nav>
+</header>
+<meta name="csrf-token" content="650f83e6f3ab884ebe68aa79ea11fd92530136b0425cf025c1b10ba310c8d7c8">
+
+<section class="section-wrap">
+    <h2>Our Menu</h2>
+
+    <form method="get" class="menu-filters">
+        <input type="text" name="q" placeholder="Search dishes..." value="">
+        <button type="submit" class="active">All</button>
+                    <a href="?category=1">
+                <button type="button" class=""
+                    onclick="window.location.href='?category=1'">
+                    Pizza                </button>
+            </a>
+                    <a href="?category=2">
+                <button type="button" class=""
+                    onclick="window.location.href='?category=2'">
+                    Burgers                </button>
+            </a>
+                    <a href="?category=3">
+                <button type="button" class=""
+                    onclick="window.location.href='?category=3'">
+                    Pasta                </button>
+            </a>
+                    <a href="?category=4">
+                <button type="button" class=""
+                    onclick="window.location.href='?category=4'">
+                    Snacks                </button>
+            </a>
+                    <a href="?category=5">
+                <button type="button" class=""
+                    onclick="window.location.href='?category=5'">
+                    Beverages                </button>
+            </a>
+                    <a href="?category=6">
+                <button type="button" class=""
+                    onclick="window.location.href='?category=6'">
+                    Desserts                </button>
+            </a>
+            </form>
+
+            <div class="item-grid">
+                            <div class="item-card">
+                    <img src="/assets/images/pizza.jpg" alt="Cheese Pizza">
+                    <div class="item-body">
+                        <h4>Cheese Pizza</h4>
+                        <p>Loaded with fresh mozzarella cheese and crispy crust.</p>
+                        <div class="price">₹299.00</div>
+                                                    <button class="add-btn" data-add-to-cart data-item-id="1">Add to Cart</button>
+                                            </div>
+                </div>
+                            <div class="item-card">
+                    <img src="/assets/images/burger.jpg" alt="Veg Burger">
+                    <div class="item-body">
+                        <h4>Veg Burger</h4>
+                        <p>Crispy veggie patty with cheese and fresh vegetables.</p>
+                        <div class="price">₹199.00</div>
+                                                    <button class="add-btn" data-add-to-cart data-item-id="2">Add to Cart</button>
+                                            </div>
+                </div>
+                            <div class="item-card">
+                    <img src="/assets/images/pasta.jpg" alt="Mix Sauce Pasta">
+                    <div class="item-body">
+                        <h4>Mix Sauce Pasta</h4>
+                        <p>A delicious combination of creamy white and tangy red sauce.</p>
+                        <div class="price">₹249.00</div>
+                                                    <button class="add-btn" data-add-to-cart data-item-id="3">Add to Cart</button>
+                                            </div>
+                </div>
+                            <div class="item-card">
+                    <img src="/assets/images/frenchfries.jpg" alt="French Fries">
+                    <div class="item-body">
+                        <h4>French Fries</h4>
+                        <p>Golden, crispy fries served hot and salted.</p>
+                        <div class="price">₹149.00</div>
+                                                    <button class="add-btn" data-add-to-cart data-item-id="5">Add to Cart</button>
+                                            </div>
+                </div>
+                            <div class="item-card">
+                    <img src="/assets/images/coffee.jpg" alt="Cold Coffee">
+                    <div class="item-body">
+                        <h4>Cold Coffee</h4>
+                        <p>Chilled, creamy coffee blended to perfection.</p>
+                        <div class="price">₹129.00</div>
+                                                    <button class="add-btn" data-add-to-cart data-item-id="4">Add to Cart</button>
+                                            </div>
+                </div>
+                            <div class="item-card">
+                    <img src="/assets/images/juices.jpg" alt="Fresh Juice">
+                    <div class="item-body">
+                        <h4>Fresh Juice</h4>
+                        <p>Seasonal fresh fruit juice, no added sugar.</p>
+                        <div class="price">₹99.00</div>
+                                                    <button class="add-btn" data-add-to-cart data-item-id="6">Add to Cart</button>
+                                            </div>
+                </div>
+                            <div class="item-card">
+                    <img src="/assets/images/dessert.jpg" alt="Chef Special Dessert">
+                    <div class="item-body">
+                        <h4>Chef Special Dessert</h4>
+                        <p>A daily-rotating dessert crafted by our chef.</p>
+                        <div class="price">₹179.00</div>
+                                                    <button class="add-btn" data-add-to-cart data-item-id="7">Add to Cart</button>
+                                            </div>
+                </div>
+                    </div>
+    </section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">
+            <h2>Food Factory</h2>
+            <p>Fresh Food • Great Taste • Happy Customers</p>
+        </div>
+        <div class="footer-links">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="/public/index.php">Home</a></li>
+                <li><a href="/public/about.php">About</a></li>
+                <li><a href="/public/menu.php">Menu</a></li>
+                <li><a href="/public/review.php">Reviews</a></li>
+                <li><a href="/public/gallery.php">Gallery</a></li>
+                <li><a href="/public/reservation.php">Reservation</a></li>
+                <li><a href="/public/contact.php">Contact</a></li>
+                <li><a href="/public/order.php">Order</a></li>
+            </ul>
+        </div>
+        <div class="footer-contact">
+            <h3>Contact</h3>
+            <p>📞 +91 81412 14421</p>
+            <p>📧 foodfactory@gmail.com</p>
+            <p>📍 Ahmedabad, Gujarat</p>
+        </div>
+    </div>
+    <hr>
+    <p class="copyright">© 2026 Food Factory. All Rights Reserved.</p>
+</footer>
+<script src="/assets/js/script.js"></script>
+<script src="/assets/js/site.js"></script>
+</body>
+</html>

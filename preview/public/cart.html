@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart - Food Factory</title>
+<link rel="stylesheet" href="/assets/css/style4.css">
+<link rel="stylesheet" href="/assets/css/site.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+    <nav>
+        <div class="logo">
+            <img src="/assets/images/img.jpg" alt="Restaurant Logo">
+            <h2>FOOD FACTORY</h2>
+        </div>
+        <div class="menu-toggle" id="menu-toggle">☰</div>
+        <ul id="nav-menu">
+            <li><a href="/public/index.php">Home</a></li>
+            <li><a href="/public/about.php">About</a></li>
+            <li><a href="/public/menu.php">Menu</a></li>
+            <li><a href="/public/review.php">Reviews</a></li>
+            <li><a href="/public/gallery.php">Gallery</a></li>
+            <li><a href="/public/reservation.php">Reservation</a></li>
+            <li><a href="/public/contact.php">Contact</a></li>
+            <li><a href="/public/order.php">Order</a></li>
+            <li><a href="/public/cart.php" class="cart-link">🛒 Cart</a></li>
+                            <li><a href="/public/login.php">Login</a></li>
+                    </ul>
+    </nav>
+</header>
+<meta name="csrf-token" content="57a0912307f1cd906ffd117e065affd09c2eb61f15970f831ac045be62741112">
+
+<section class="section-wrap">
+    <h2>Your Cart</h2>
+
+            <p>Your cart is empty. <a href="/public/menu.php">Browse the menu</a> to get started.</p>
+    </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const csrf = document.querySelector('meta[name="csrf-token"]').content;
+
+    async function updateLine(id, qty) {
+        const res = await fetch('/api/cart/update.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ cart_item_id: id, quantity: qty, csrf_token: csrf }),
+        });
+        const data = await res.json();
+        if (data.success) {
+            location.reload();
+        }
+    }
+
+    document.querySelectorAll('.cart-qty').forEach(input => {
+        input.addEventListener('change', () => updateLine(input.dataset.cartItemId, parseInt(input.value, 10)));
+    });
+    document.querySelectorAll('.remove-line').forEach(btn => {
+        btn.addEventListener('click', () => updateLine(btn.dataset.cartItemId, 0));
+    });
+});
+</script>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">
+            <h2>Food Factory</h2>
+            <p>Fresh Food • Great Taste • Happy Customers</p>
+        </div>
+        <div class="footer-links">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="/public/index.php">Home</a></li>
+                <li><a href="/public/about.php">About</a></li>
+                <li><a href="/public/menu.php">Menu</a></li>
+                <li><a href="/public/review.php">Reviews</a></li>
+                <li><a href="/public/gallery.php">Gallery</a></li>
+                <li><a href="/public/reservation.php">Reservation</a></li>
+                <li><a href="/public/contact.php">Contact</a></li>
+                <li><a href="/public/order.php">Order</a></li>
+            </ul>
+        </div>
+        <div class="footer-contact">
+            <h3>Contact</h3>
+            <p>📞 +91 81412 14421</p>
+            <p>📧 foodfactory@gmail.com</p>
+            <p>📍 Ahmedabad, Gujarat</p>
+        </div>
+    </div>
+    <hr>
+    <p class="copyright">© 2026 Food Factory. All Rights Reserved.</p>
+</footer>
+<script src="/assets/js/script.js"></script>
+<script src="/assets/js/site.js"></script>
+</body>
+</html>
