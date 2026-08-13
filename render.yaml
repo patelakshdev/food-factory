@@ -1,9 +1,14 @@
 # Render Blueprint — Food Factory
-# Deploys: 1 web service (the PHP app, from Dockerfile) + 1 MariaDB (via Docker).
-# Render does not offer a managed MySQL database, so the DB is a Docker service
-# with a persistent disk. The web service waits for it via its bootstrapper.
+# Deploys: 1 web service (the PHP app, from Dockerfile) + 1 MariaDB private
+# service. Render does not offer a managed MySQL database, so the DB runs as a
+# private Docker service (`pserv` — no public route, no HTTP probing) with a
+# persistent disk. The web service waits for it via its bootstrapper.
 #
-# Import: https://render.com/new/blueprint  ->  paste the repo URL.
+# Import: https://render.com/new/blueprint?repo=https://github.com/patelakshdev/food-factory
+#
+# Cost note: the DB service needs `plan: starter` (~$7/mo) because the Render
+# free tier cannot attach a persistent disk. For a $0 database instead, host the
+# schema on a free managed MySQL (e.g. Aiven Hobby) and set DB_* env vars here.
 
 services:
   - type: web
@@ -22,7 +27,7 @@ services:
         sync: false            # set to https://food-factory.onrender.com after first deploy
       - key: DB_HOST
         fromService:
-          type: web
+          type: pserv
           name: food-factory-db
           property: host
       - key: DB_PORT
@@ -33,7 +38,7 @@ services:
         value: food_factory
       - key: DB_PASSWORD
         fromService:
-          type: web
+          type: pserv
           name: food-factory-db
           property: envValue
           envKey: MARIADB_PASSWORD
@@ -42,15 +47,15 @@ services:
       - key: ADMIN_PASSWORD
         sync: false            # set a real password, e.g. 20+ random chars
 
-  # MariaDB server. Render blueprints cannot attach a disk to 'db'-type
-  # services, so run it as a Docker web service ("health path" unused):
-  - type: web
+  # MariaDB server as a private service: no public route, no HTTP health check.
+  # Render blueprints cannot attach a disk to 'db'-type services, so this is a
+  # Docker 'pserv'. Its internal hostname is wired into the web service below.
+  - type: pserv
     name: food-factory-db
     runtime: docker
     plan: starter            # free tier cannot attach persistent disks
     repo: https://github.com/patelakshdev/food-factory
     dockerfilePath: ./deploy/db.Dockerfile
-    healthCheckPath: /       # dummy; mysql listens on 3306
     disk:
       name: mariadb-data
       mountPath: /var/lib/mysql
