@@ -1,0 +1,22 @@
+# Secrets
+.env
+
+# VCS
+.git
+.gitignore
+.gitattributes
+
+# Tools / docs kept out of the image
+MASTER.md
+
+# Codebase memory artifacts
+.codebase-memory/
+
+# Local runtime artifacts
+storage/logs/*
+storage/uploads/*
+*.log
+
+# OS cruft
+.DS_Store
+Thumbs.db

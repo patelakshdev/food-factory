@@ -1,0 +1,68 @@
+# Render Blueprint — Food Factory
+# Deploys: 1 web service (the PHP app, from Dockerfile) + 1 MariaDB (via Docker).
+# Render does not offer a managed MySQL database, so the DB is a Docker service
+# with a persistent disk. The web service waits for it via its bootstrapper.
+#
+# Import: https://render.com/new/blueprint  ->  paste the repo URL.
+
+services:
+  - type: web
+    name: food-factory
+    runtime: docker
+    repo: https://github.com/patelakshdev/food-factory
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /public/index.php
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_URL
+        sync: false            # set to https://food-factory.onrender.com after first deploy
+      - key: DB_HOST
+        fromService:
+          type: web
+          name: food-factory-db
+          property: host
+      - key: DB_PORT
+        value: "3306"
+      - key: DB_DATABASE
+        value: food_factory
+      - key: DB_USERNAME
+        value: food_factory
+      - key: DB_PASSWORD
+        fromService:
+          type: web
+          name: food-factory-db
+          property: envValue
+          envKey: MARIADB_PASSWORD
+      - key: ADMIN_EMAIL
+        value: admin@foodfactory.local
+      - key: ADMIN_PASSWORD
+        sync: false            # set a real password, e.g. 20+ random chars
+
+  # MariaDB server. Render blueprints cannot attach a disk to 'db'-type
+  # services, so run it as a Docker web service ("health path" unused):
+  - type: web
+    name: food-factory-db
+    runtime: docker
+    plan: starter            # free tier cannot attach persistent disks
+    repo: https://github.com/patelakshdev/food-factory
+    dockerfilePath: ./deploy/db.Dockerfile
+    healthCheckPath: /       # dummy; mysql listens on 3306
+    disk:
+      name: mariadb-data
+      mountPath: /var/lib/mysql
+      sizeGB: 1
+    envVars:
+      - key: MARIADB_ROOT_PASSWORD
+        generateValue: true
+      - key: MARIADB_DATABASE
+        value: food_factory
+      - key: MARIADB_USER
+        value: food_factory
+      - key: MARIADB_PASSWORD
+        generateValue: true
+      - key: MARIADB_TCP_PORT
+        value: "3306"
