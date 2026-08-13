@@ -12,7 +12,7 @@
     { "src": "/robots.txt", "dest": "/robots.txt" },
     { "src": "/favicon.ico", "dest": "/favicon.ico" },
     { "src": "/preview/(.*)", "status": 404 },
-    { "src": "/\.env", "status": 404 },
+    { "src": "/\\.env", "status": 404 },
     { "src": "/.*", "dest": "/api/index.php" }
   ]
 }
