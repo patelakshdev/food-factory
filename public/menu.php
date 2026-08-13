@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../config/app.php';
 
-$pageTitle = 'Menu - Food Factory';
+$pageTitle = 'Our Menu - Food Factory';
 
 $categoryId = isset($_GET['category']) ? (int)$_GET['category'] : 0;
 $search = trim((string)($_GET['q'] ?? ''));
@@ -30,43 +30,76 @@ require __DIR__ . '/../includes/header.php';
 ?>
 <meta name="csrf-token" content="<?= e(csrf_token()) ?>">
 
-<section class="section-wrap">
-    <h2>Our Menu</h2>
+<div class="section-wrap" style="max-width:1200px;">
+    <!-- Page header -->
+    <div style="margin-bottom:32px;">
+        <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:10px;">What we serve</div>
+        <h2 style="font-family:'Outfit',sans-serif;font-size:clamp(28px,4vw,42px);font-weight:800;color:var(--white);margin-bottom:8px;">Our Full Menu</h2>
+        <p style="color:var(--text-muted);font-size:15px;">Explore our wide variety of freshly prepared dishes.</p>
+    </div>
 
-    <form method="get" class="menu-filters">
-        <input type="text" name="q" placeholder="Search dishes..." value="<?= e($search) ?>">
-        <button type="submit" class="<?= $categoryId === 0 ? 'active' : '' ?>">All</button>
+    <!-- Filters -->
+    <form method="get" class="menu-filters" id="menu-filter-form">
+        <input type="text" name="q" id="menu-search" placeholder="🔍  Search dishes…" value="<?= e($search) ?>">
+        <a href="/public/menu.php"><button type="button" class="<?= $categoryId === 0 && $search === '' ? 'active' : '' ?>">All</button></a>
         <?php foreach ($categories as $cat): ?>
             <a href="?category=<?= (int)$cat['id'] ?><?= $search !== '' ? '&q=' . urlencode($search) : '' ?>">
-                <button type="button" class="<?= $categoryId === (int)$cat['id'] ? 'active' : '' ?>"
-                    onclick="window.location.href='?category=<?= (int)$cat['id'] ?><?= $search !== '' ? '&q=' . urlencode($search) : '' ?>'">
+                <button type="button" class="<?= $categoryId === (int)$cat['id'] ? 'active' : '' ?>">
                     <?= e($cat['name']) ?>
                 </button>
             </a>
         <?php endforeach; ?>
+        <button type="submit" style="background:var(--accent);color:#fff;border-color:var(--accent);">Search</button>
     </form>
 
+    <!-- Results count -->
+    <?php if ($search !== '' || $categoryId > 0): ?>
+        <p style="color:var(--text-muted);font-size:13px;margin-bottom:20px;">
+            <?= count($items) ?> result<?= count($items) !== 1 ? 's' : '' ?> found
+            <?= $search ? 'for "<strong style="color:var(--white);">' . e($search) . '</strong>"' : '' ?>
+        </p>
+    <?php endif; ?>
+
+    <!-- Items grid -->
     <?php if (!$items): ?>
-        <p>No dishes match your search. Try a different keyword or category.</p>
+        <div style="text-align:center;padding:80px 20px;">
+            <div style="font-size:64px;margin-bottom:20px;">🍽️</div>
+            <h3 style="font-family:'Outfit',sans-serif;color:var(--white);font-size:22px;margin-bottom:10px;">No dishes found</h3>
+            <p style="color:var(--text-muted);margin-bottom:24px;">Try a different keyword or browse all categories.</p>
+            <a href="/public/menu.php" class="btn">Browse All</a>
+        </div>
     <?php else: ?>
         <div class="item-grid">
             <?php foreach ($items as $item): ?>
                 <div class="item-card">
-                    <img src="/assets/images/<?= e($item['image']) ?>" alt="<?= e($item['name']) ?>">
+                    <div style="position:relative;overflow:hidden;">
+                        <img src="/assets/images/<?= e($item['image']) ?>" alt="<?= e($item['name']) ?>" loading="lazy">
+                        <?php if ($item['status'] === 'out_of_stock'): ?>
+                            <div style="position:absolute;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;">
+                                <span style="background:rgba(239,68,68,0.9);color:#fff;padding:6px 14px;border-radius:50px;font-size:12px;font-weight:700;">OUT OF STOCK</span>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($item['is_featured']): ?>
+                            <div style="position:absolute;top:10px;left:10px;background:var(--accent);color:#fff;padding:3px 10px;border-radius:50px;font-size:10px;font-weight:700;">⭐ FEATURED</div>
+                        <?php endif; ?>
+                    </div>
                     <div class="item-body">
+                        <div style="font-size:11px;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;"><?= e($item['category_name']) ?></div>
                         <h4><?= e($item['name']) ?></h4>
                         <p><?= e($item['description']) ?></p>
                         <div class="price"><?= money((float)$item['price']) ?></div>
                         <?php if ($item['status'] === 'out_of_stock'): ?>
                             <button class="add-btn" disabled>Out of Stock</button>
                         <?php else: ?>
-                            <button class="add-btn" data-add-to-cart data-item-id="<?= (int)$item['id'] ?>">Add to Cart</button>
+                            <button class="add-btn" data-add-to-cart data-item-id="<?= (int)$item['id'] ?>">
+                                🛒 Add to Cart
+                            </button>
                         <?php endif; ?>
                     </div>
                 </div>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
-</section>
+</div>
 
 <?php require __DIR__ . '/../includes/footer.php'; ?>

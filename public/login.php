@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/app.php';
-$pageTitle = 'Login - Food Factory';
+$pageTitle = 'Sign In - Food Factory';
 
 if (is_logged_in()) {
     redirect('/public/orders.php');
@@ -26,17 +26,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 require __DIR__ . '/../includes/header.php';
 ?>
-<section class="section-wrap">
-    <div class="login-box">
-        <h2>Login</h2>
-        <?php if ($error): ?><div class="alert alert-error"><?= e($error) ?></div><?php endif; ?>
-        <form method="post">
+
+<div class="auth-page">
+    <div class="auth-card">
+        <!-- Logo -->
+        <div class="auth-logo">
+            <div class="auth-logo-icon">🍔</div>
+            <h1>FOOD <span>FACTORY</span></h1>
+            <p>Sign in to your account</p>
+        </div>
+
+        <?php if ($error): ?>
+            <div class="alert alert-error"><span>⚠️</span><?= e($error) ?></div>
+        <?php endif; ?>
+
+        <form method="post" id="login-form" novalidate>
             <?= csrf_field() ?>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit" class="btn" style="width:100%;">Login</button>
+
+            <div class="form-field" id="field-email">
+                <input type="email" name="email" id="email-input" placeholder="Email address" required
+                       value="<?= old('email') ?>" autocomplete="email">
+                <label for="email-input">Email address</label>
+            </div>
+
+            <div class="form-field" id="field-password" style="position:relative;">
+                <input type="password" name="password" id="pwd-input" placeholder="Password" required autocomplete="current-password">
+                <label for="pwd-input">Password</label>
+                <span class="pwd-toggle" onclick="togglePwd('pwd-input', this)" title="Show/hide password">👁</span>
+            </div>
+
+            <button type="submit" class="btn" style="width:100%;justify-content:center;margin-top:8px;border-radius:8px;">
+                Sign In →
+            </button>
         </form>
-        <p style="margin-top:14px;font-size:14px;">New here? <a href="/public/register.php">Create an account</a></p>
+
+        <div class="auth-divider"><span>New to Food Factory?</span></div>
+
+        <a href="/public/register.php" class="btn2" style="width:100%;justify-content:center;border-radius:8px;text-align:center;">
+            Create your account
+        </a>
+
+        <div class="auth-trust">🔒 Secure & encrypted login</div>
     </div>
-</section>
+</div>
+
+<script>
+function togglePwd(id, btn) {
+    var inp = document.getElementById(id);
+    if (!inp) return;
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+    btn.textContent = inp.type === 'password' ? '👁' : '🙈';
+}
+</script>
+
 <?php require __DIR__ . '/../includes/footer.php'; ?>
