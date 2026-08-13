@@ -21,3 +21,4 @@ Thumbs.db
 # Codebase memory graph
 .codebase-memory/
 .vercel
+.env*
